@@ -4,74 +4,42 @@ import Keys from './Keys'
 // https://www.cssacademy.com/blog/create-a-calculator-in-html-and-css
 function Calculator() {
     const [inpVal, setinpVal] = useState(0);
-    let valOne = 0;
-    let valTwo = 0;
-    let arithmeticOp = false;
-    let equalOp = false;
-
+    const [exp, setExp] = useState("");
+    const [opr, setOpr] = useState(false);
+    let numbers = ["0","1","2","3","4","5","6","7","8","9","."];
+    let signs = ["+","-","÷","*"];
     let calc = (event) => {
-        //setinpVal (event.target.value);
-        if((event.target.value == '+' || event.target.value == '-' || event.target.value == '*' || event.target.value == '÷'))
+        if(event.target.value == "÷"){
+            setExp(exp + "/");
+        }else if(event.target.value == 'AC'){
+            setinpVal (0);
+            setOpr(false);
+            setExp("");
+        }else{
+            setExp(exp + event.target.value);
+        }
+
+        if(signs.includes(event.target.value))
         {
-            arithmeticOp = event.target.value;
+            setOpr(event.target.value);
         }
         else if (event.target.value == "="){
-            equalOp = event.target.value;
-        }
-
-        if(arithmeticOp == false && equalOp == false) {
-            inpVal == 0 ? setinpVal (event.target.value) : setinpVal (inpVal + event.target.value);
-        }
-        else if(arithmeticOp){
-            valOne == 0  && inpVal > 0 ? valOne = inpVal : valOne = 0;
-        }
-        else if(equalOp){
-            valOne != 0  && inpVal > 0 ? valOne = inpVal : valOne = 0;
-        }
-
-        console.log(valOne)
-        console.log(valTwo)
-        console.log(arithmeticOp)
-        console.log(equalOp)
-        // if( arithmeticOp == false && equalOp == false  )
-        // {
-
-        //     inpVal = 0 ? setinpVal (event.target.value) : setinpVal (inpVal + event.target.value);
-        // }
-        
-        // else
-        // {
-        //     if(inpVal > 0 && (event.target.value == '+' || event.target.value == '-' || event.target.value == '*' || event.target.value == '÷')){
-        //         valOne = inpVal;
-        //         valOp = event.target.value;
-        //         //setinpVal (0);
-        //     }
-        //     else if( valOne > 0 && (event.target.value != '+' || event.target.value != '-' || event.target.value != '*' || event.target.value != '÷'))
-        //     {
-        //         setinpVal (0);
-        //         setinpVal (inpVal + event.target.value) 
-        //         valTwo =  inpVal;
-        //         //console.log( eval(valOne + valOp + valTwo) );
-        //     }
-        //     else if( event.target.value == '=' )
-        //     {
-        //         //setinpVal (inpVal + event.target.value) 
-        //         //valTwo = event.target.value ;
-        //         let res = 0;
-        //         res = eval(valOne + valOp + valTwo)
-        //         setinpVal (res) 
-        //         console.log( inpVal );
-        //     }
-        //     else{
-        //         console.log(arithmeticOp);
-        //         setinpVal (inpVal + event.target.value)    
-        //     }
+            console.log(exp);
+            setinpVal (eval(exp));
+            setExp("");
+            setOpr(true);
+        } 
+        else if(numbers.includes(event.target.value)) {
             
-        // }
-        
+            if(opr){
+                setinpVal (event.target.value);
+                setOpr(false);
+            }else{
+                inpVal == 0 ? setinpVal (event.target.value) : setinpVal (inpVal + event.target.value);
+            }
+            
+        }
 
-
-        
     }
   return (
     <>
